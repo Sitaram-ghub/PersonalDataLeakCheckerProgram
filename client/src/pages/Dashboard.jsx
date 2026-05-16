@@ -4,7 +4,6 @@ import { useAuth } from '../context/AuthContext';
 import { Clock, ShieldAlert, CheckCircle, Activity, Calendar, Hash, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ModernRiskGauge from '../components/ModernRiskGauge';
-import ModernRecommendations from '../components/ModernRecommendations';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -109,9 +108,6 @@ const Dashboard = () => {
           </div>
         </motion.div>
       </div>
-
-      {/* Recommendations Section */}
-      <ModernRecommendations items={analysis?.recommendations} />
 
       {/* Scan History Table */}
       <div className="mt-12 glass-panel rounded-2xl border border-white/5 overflow-hidden">

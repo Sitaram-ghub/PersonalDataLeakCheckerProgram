@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.PROD ? '/api' : (import.meta.env.VITE_API_URL || 'http://localhost:5000/api');
-
+// Use relative path to leverage Vite proxy in dev, and serve from same origin in prod
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: '/api',
 });
 
 api.interceptors.request.use(

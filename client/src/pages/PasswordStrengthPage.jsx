@@ -8,7 +8,7 @@ const PasswordStrengthPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [strength, setStrength] = useState({ score: 0, label: 'None', color: 'gray', time: 'N/A' });
   const [patterns, setPatterns] = useState([]);
-  const [advice, setAdvice] = useState('Wait for AI analysis...');
+  const [advice, setAdvice] = useState('Wait for security analysis...');
   const [analyzing, setAnalyzing] = useState(false);
 
   const calculateStrength = (pwd) => {
@@ -62,15 +62,19 @@ const PasswordStrengthPage = () => {
           setPatterns(res.data.patterns || []);
           setAdvice(res.data.advice || 'Avoid using predictable patterns.');
         } catch (err) {
-          console.error("Analysis Error:", err);
+          if (err.response && err.response.status === 401) {
+             setAdvice("Session Expired. Please login again to see patterns.");
+          } else {
+             setAdvice(`Connection Error: ${err.message}. Check your backend server.`);
+          }
         } finally {
           setAnalyzing(false);
         }
-      }, 300); // Super fast local response
+      }, 300);
       return () => clearTimeout(timer);
     } else {
       setPatterns([]);
-      setAdvice('Type more for deep analysis...');
+      setAdvice('Type more for deep security analysis...');
     }
   }, [password]);
 
@@ -195,7 +199,7 @@ const PasswordStrengthPage = () => {
 
       </div>
 
-      {/* Pattern Analysis Section */}
+      {/* Security Pattern Analysis Section */}
       <AnimatePresence>
         {password && (
           <motion.div 
@@ -207,8 +211,8 @@ const PasswordStrengthPage = () => {
             <div className="flex items-center gap-3 mb-6">
               <ShieldAlert className="w-6 h-6 text-red-500" />
               <div>
-                <h2 className="text-xl font-bold text-white uppercase tracking-tight">AI Pattern Analysis</h2>
-                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Predictability_Detection_Engine</p>
+                <h2 className="text-xl font-bold text-white uppercase tracking-tight">Security Pattern Analysis</h2>
+                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Heuristic_Detection_Engine</p>
               </div>
             </div>
 
@@ -225,12 +229,7 @@ const PasswordStrengthPage = () => {
               ) : analyzing ? (
                 <div className="p-4 bg-blue-500/10 rounded-xl border border-blue-500/20 flex items-center gap-3">
                    <Loader2 className="w-5 h-5 text-blue-500 animate-spin" />
-                   <span className="text-sm font-bold text-blue-500 italic">AI Security Expert is analyzing your password...</span>
-                </div>
-              ) : advice.includes('Analysis currently unavailable') ? (
-                <div className="p-4 bg-red-500/10 rounded-xl border border-red-500/20 flex items-center gap-3">
-                  <ShieldAlert className="w-5 h-5 text-red-500" />
-                  <span className="text-sm font-bold text-red-500">AI Deep Scan Offline. Check your API key.</span>
+                   <span className="text-sm font-bold text-blue-500 italic">Security expert is auditing your password...</span>
                 </div>
               ) : (
                 <div className="p-4 bg-green-500/10 rounded-xl border border-green-500/20 flex items-center gap-3">
@@ -241,8 +240,8 @@ const PasswordStrengthPage = () => {
 
               <div className="mt-4 p-4 bg-white/[0.03] rounded-xl border border-white/5">
                 <p className="text-sm text-gray-400 font-medium italic leading-relaxed">
-                  <span className="text-[var(--color-neon-blue)] font-black not-italic mr-2">AI_ADVICE:</span> 
-                  {analyzing ? "AI is thinking..." : advice}
+                  <span className="text-[var(--color-neon-blue)] font-black not-italic mr-2">SECURITY_ADVICE:</span> 
+                  {analyzing ? "Analyzing security patterns..." : advice}
                 </p>
               </div>
             </div>
