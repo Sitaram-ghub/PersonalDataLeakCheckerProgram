@@ -2,6 +2,7 @@ services:
   - type: web
     name: personal-data-leak-checker
     env: python
+    plan: free
     buildCommand: ./build.sh
     startCommand: gunicorn --chdir server app:app
     envVars:
