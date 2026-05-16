@@ -2,9 +2,12 @@
 # exit on error
 set -o errexit
 
-# Build Frontend
-npm install --prefix client
-npm run build --prefix client
+# Build Frontend (Optimized for low RAM)
+cd client
+npm install --no-audit --no-fund
+npm run build
+cd ..
 
 # Build Backend
+pip install --upgrade pip
 pip install -r server/requirements.txt
