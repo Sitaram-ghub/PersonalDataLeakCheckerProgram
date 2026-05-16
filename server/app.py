@@ -56,12 +56,18 @@ def create_app(config_class=Config):
     return app
 
 try:
+    print("STEP 1: Starting create_app()...")
     app = create_app()
+    print("STEP 2: App object created.")
+    
     with app.app_context():
+        print("STEP 3: Running db.create_all()...")
         db.create_all()
-    print("Server initialized successfully")
+        print("STEP 4: Database check/creation done.")
+    
+    print("Server initialized successfully! Ready to handle requests.")
 except Exception as e:
-    print(f"CRITICAL STARTUP ERROR: {e}")
+    print(f"!!! CRITICAL STARTUP ERROR !!!: {e}")
     import traceback
     traceback.print_exc()
     raise e
