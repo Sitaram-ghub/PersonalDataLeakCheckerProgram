@@ -55,10 +55,16 @@ def create_app(config_class=Config):
 
     return app
 
-app = create_app()
-
-with app.app_context():
-    db.create_all()
+try:
+    app = create_app()
+    with app.app_context():
+        db.create_all()
+    print("Server initialized successfully")
+except Exception as e:
+    print(f"CRITICAL STARTUP ERROR: {e}")
+    import traceback
+    traceback.print_exc()
+    raise e
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
