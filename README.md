@@ -81,5 +81,4 @@ This tool is strictly for personal auditing and educational research. Always pra
 - Regularly rotate sensitive credentials.
 - Always enable Multi-Factor Authentication (MFA).
 
----
-*Created with ❤️ for the Cyber-Security Community.*
+
