@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: personal-data-leak-checker
+    env: python
+    buildCommand: ./build.sh
+    startCommand: cd server && gunicorn "app:create_app()"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.11
+      - key: SECRET_KEY
+        generateValue: true
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: FLASK_ENV
+        value: production

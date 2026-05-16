@@ -1,0 +1,14 @@
+{
+  "name": "personal-data-leak-checker-root",
+  "version": "1.0.0",
+  "description": "Root package to manage client and server",
+  "scripts": {
+    "server": "cd server && .\\venv\\Scripts\\python.exe app.py",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install:all": "npm install --prefix client && cd server && .\\venv\\Scripts\\activate && pip install -r requirements.txt"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
